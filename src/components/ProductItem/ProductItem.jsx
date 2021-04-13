@@ -11,7 +11,7 @@ export default class ProductItem extends Component {
                 <div className="card-body text-center">
                     <h4 className="card-title">{productProps.name}</h4>
                     <p className="card-text">$ {productProps.price.toLocaleString()} VND</p>
-                    <div className="btn btn-success" onClick={() => { }}>Add to cart</div>
+                    <button className="btn btn-success" onClick={() => this.props.addToCart(productProps)}>Add to cart</button>
                 </div>
             </div>
 

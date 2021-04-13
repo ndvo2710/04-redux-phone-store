@@ -12,7 +12,7 @@ export default class ProductList extends Component {
         return this.products.map((prod, index) => {
             return (
                 <div className="col-4" key={index}>
-                    <ProductItem productProps={prod} />
+                    <ProductItem addToCart={this.props.addToCart} productProps={prod} />
                 </div>
             )
         })
