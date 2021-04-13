@@ -1,10 +1,10 @@
-
-import './App.css';
+import "./App.css";
+import PhoneStore from "./components/PhoneStore/PhoneStore";
 
 function App() {
   return (
     <div className="App">
-      123
+      <PhoneStore />
     </div>
   );
 }
