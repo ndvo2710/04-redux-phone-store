@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class CartModal extends Component {
+
+class CartModal extends Component {
     renderCart = () => {
+
         const { cart } = this.props;
         return cart.map((cartItem, index) => {
             return <tr key={index}>
@@ -9,16 +12,17 @@ export default class CartModal extends Component {
                 <td><img style={{ width: 35, height: 35 }} src={cartItem.img} alt={cartItem.img} /></td>
                 <td>{cartItem.name}</td>
                 <td>
-                    <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, 1) }}>+</button>
-                    {cartItem.quantity.toLocaleString()}
-                    <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, -1) }}>-</button>
+                    {/* <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, 1) }}>+</button> */}
+                    {/* {cartItem.quantity.toLocaleString()} */}
+                    {cartItem.quantity}
+                    {/* <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, -1) }}>-</button> */}
                 </td>
                 <td>{cartItem.price.toLocaleString()} VND</td>
                 <td>{(cartItem.quantity * cartItem.price).toLocaleString()} VND</td>
                 <td>
-                    <button className="btn btn-danger" onClick={() => this.props.removeItem(cartItem.id)}>
+                    {/* <button className="btn btn-danger" onClick={() => this.props.removeItem(cartItem.id)}>
                         Remove
-                    </button>
+                    </button> */}
                 </td>
             </tr>
         })
@@ -32,7 +36,9 @@ export default class CartModal extends Component {
     }
 
     render() {
+        console.log(this.props);
         return (
+
             <div>
                 {/* Modal */}
                 <div className="modal fade" id="modelId" tabIndex={-1} role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
@@ -80,3 +86,12 @@ export default class CartModal extends Component {
         )
     }
 }
+
+// Convert redux state to props
+const mapStateToProps = state => {
+    return {
+        cart: state.stateCart.cart
+    }
+}
+
+export default connect(mapStateToProps)(CartModal);
