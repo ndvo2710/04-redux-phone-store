@@ -8,11 +8,27 @@ export default class CartModal extends Component {
                 <td>{cartItem.id}</td>
                 <td><img style={{ width: 35, height: 35 }} src={cartItem.img} alt={cartItem.img} /></td>
                 <td>{cartItem.name}</td>
-                <td>{cartItem.quantity}</td>
-                <td>{cartItem.price}</td>
-                <td>{cartItem.quantity * cartItem.price}</td>
+                <td>
+                    <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, 1) }}>+</button>
+                    {cartItem.quantity.toLocaleString()}
+                    <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, -1) }}>-</button>
+                </td>
+                <td>{cartItem.price.toLocaleString()} VND</td>
+                <td>{(cartItem.quantity * cartItem.price).toLocaleString()} VND</td>
+                <td>
+                    <button className="btn btn-danger" onClick={() => this.props.removeItem(cartItem.id)}>
+                        Remove
+                    </button>
+                </td>
             </tr>
         })
+    }
+
+    calculateTotalCost = () => {
+        const { cart } = this.props;
+        return cart.reduce((totalCost, cartItem, index) => {
+            return totalCost += cartItem.quantity * cartItem.price;
+        }, 0).toLocaleString();
     }
 
     render() {
@@ -29,7 +45,7 @@ export default class CartModal extends Component {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <table class="table">
+                                <table className="table">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
@@ -44,11 +60,17 @@ export default class CartModal extends Component {
                                     <tbody>
                                         {this.renderCart()}
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colSpan="5"></td>
+                                            <td>Total Cost:</td>
+                                            <td>{this.calculateTotalCost()}</td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" className="btn btn-primary">Save</button>
                             </div>
                         </div>
                     </div>
