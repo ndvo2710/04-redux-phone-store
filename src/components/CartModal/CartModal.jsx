@@ -12,17 +12,17 @@ class CartModal extends Component {
                 <td><img style={{ width: 35, height: 35 }} src={cartItem.img} alt={cartItem.img} /></td>
                 <td>{cartItem.name}</td>
                 <td>
-                    {/* <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, 1) }}>+</button> */}
-                    {/* {cartItem.quantity.toLocaleString()} */}
+                    <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, 1) }}>+</button>
+
                     {cartItem.quantity}
-                    {/* <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, -1) }}>-</button> */}
+                    <button className="btn btn-success" onClick={() => { this.props.changeQuantity(cartItem.id, -1) }}>-</button>
                 </td>
                 <td>{cartItem.price.toLocaleString()} VND</td>
                 <td>{(cartItem.quantity * cartItem.price).toLocaleString()} VND</td>
                 <td>
-                    {/* <button className="btn btn-danger" onClick={() => this.props.removeItem(cartItem.id)}>
+                    <button className="btn btn-danger" onClick={() => this.props.removeItem(cartItem.id)}>
                         Remove
-                    </button> */}
+                    </button>
                 </td>
             </tr>
         })
@@ -87,6 +87,12 @@ class CartModal extends Component {
     }
 }
 
+
+
+
+
+
+
 // Convert redux state to props
 const mapStateToProps = state => {
     return {
@@ -94,4 +100,32 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(CartModal);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeQuantity: (id, number) => {
+            // create action
+            let action = {
+                type: 'CHANGE_QUANTITY',
+                id,
+                number
+            }
+            // Use dispatch from redux => send data and action to reducer
+            dispatch(action);
+        },
+
+        removeItem: (id) => {
+            // create action
+            let action = {
+                type: 'REMOVE_ITEM',
+                id
+            }
+            // Use dispatch from redux => send data and action to reducer
+            dispatch(action);
+        }
+
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartModal);
